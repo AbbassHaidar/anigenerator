@@ -67,7 +67,7 @@
 
             for (var i = parseInt(start); i <= parseInt(end); i++) {
                 var paddedNumber = "00000" + i;
-                var formattedNumber = paddedNumber.substr(-start.length);
+                var formattedNumber = paddedNumber.substr(-prefix.length);
                 allData.push([prefix + formattedNumber]);
             }
 
