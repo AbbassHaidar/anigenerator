@@ -53,6 +53,7 @@
         <input type="text" id="end"><br>
         <button onclick="generateCSV()">Generate Series</button>
         <button onclick="downloadCSV()">Download All CSVs</button>
+        <button onclick="clearQueue()">Clear Queue</button>
         <div id="output" class="output"></div>
     </div>
 
@@ -102,6 +103,10 @@
 
             document.getElementById('output').innerHTML = "CSV file downloaded.";
         }
+        function clearQueue() {
+    allData = []; // Reset the allData array
+    document.getElementById('output').innerHTML = "Queue cleared.";
+    }
     </script>
 </body>
 </html>
