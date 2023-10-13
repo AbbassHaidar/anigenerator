@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            font-size: 1em;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            font-size: 1em;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: calc(100% - 20px);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>CSV Generator</h1>
+
+        <label for="inputFile">Upload CSV File:</label>
+        <input type="file" id="inputFile">
+
+        <label for="digits">Number of Digits:</label>
+        <input type="number" id="digits" min="1" value="3">
+
+        <button onclick="generateCSV()">Generate CSV</button>
+        <a id="downloadLink" style="display:none">Download CSV</a>
+
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        function generateCSV() {
+            var inputFile = document.getElementById('inputFile').files[0];
+            var digits = parseInt(document.getElementById('digits').value);
+
+            if (!inputFile) {
+                alert("Please upload a CSV file.");
+                return;
+            }
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var csvContent = e.target.result.split('\n');
+                var outputData = [];
+
+                csvContent.forEach(function (row) {
+                    if (row.trim() !== '') {
+                        var prefix = row.trim();
+                        for (var i = 0; i < 1000; i++) {
+                            var formattedNumber = prefix + i.toString().padStart(digits, '0');
+                            outputData.push([formattedNumber]);
+                        }
+                    }
+                });
+
+                var csvContent = "data:text/csv;charset=utf-8,";
+
+                outputData.forEach(function (rowArray) {
+                    var row = rowArray.join(",");
+                    csvContent += row + "\r\n";
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                var downloadLink = document.getElementById('downloadLink');
+
+                downloadLink.setAttribute("href", encodedUri);
+                downloadLink.setAttribute("download", "output.csv");
+                downloadLink.style.display = "block";
+            };
+
+            reader.readAsText(inputFile);
+        }
+    </script>
+</body>
+
+</html>
