@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            font-size: 1em;
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            font-size: 1.2em;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSV Generator</h1>
+        <label for="prefix">Prefix:</label>
+        <input type="text" id="prefix"><br>
+        <label for="start">Starting Number:</label>
+        <input type="text" id="start"><br>
+        <label for="end">Ending Number:</label>
+        <input type="text" id="end"><br>
+        <button onclick="generateCSV()">Generate Series</button>
+        <button onclick="downloadCSV()">Download All CSVs</button>
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        var allData = [];
+
+        function generateCSV() {
+            var prefix = document.getElementById('prefix').value;
+            var start = document.getElementById('start').value;
+            var end = document.getElementById('end').value;
+
+            for (var i = parseInt(start); i <= parseInt(end); i++) {
+                var paddedNumber = "00000" + i;
+                var formattedNumber = paddedNumber.substr(-start.length);
+                allData.push([prefix + formattedNumber]);
+            }
+
+            document.getElementById('output').innerHTML = "Series added to queue.";
+        }
+
+        function downloadCSV() {
+            if (allData.length === 0) {
+                document.getElementById('output').innerHTML = "No series generated yet.";
+                return;
+            }
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+            allData.forEach(function(rowArray){
+               var row = rowArray.join(",");
+               csvContent += row + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var suggestedFileName = prompt("Please enter a name for the download file", "all_series.csv");
+
+            if (suggestedFileName === null || suggestedFileName === "") {
+                suggestedFileName = "all_series.csv";
+            }
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", suggestedFileName);
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.getElementById('output').innerHTML = "CSV file downloaded.";
+        }
+    </script>
+</body>
+</html>
