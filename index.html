@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSV Generator</title>
     <style>
+          a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -45,6 +60,7 @@
 <body>
     <div class="container">
         <h1>CSV Generator</h1>
+        <a href="anigeneratorfromfile.html">click here to upload your number list</a>
         <label for="prefix">Prefix:</label>
         <input type="text" id="prefix"><br>
         <label for="start">Starting Number:</label>
