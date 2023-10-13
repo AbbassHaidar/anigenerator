@@ -19,6 +19,10 @@
         a:hover {
             background-color: #0056b3;
         }
+
+        .hideclass{
+            display: none;
+        }
         
         body {
             font-family: Arial, sans-serif;
@@ -140,6 +144,7 @@
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
             link.setAttribute("download", suggestedFileName);
+            link.setArrtibte("class",hideclass);
             document.body.appendChild(link);
 
             link.click();
