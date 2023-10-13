@@ -59,8 +59,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>CSV Generator</h1>
         <a href="anigeneratorfromfile.html">click here to upload your number list</a>
+    </br>
+        <h1>CSV Generator</h1>
         <label for="prefix">Prefix:</label>
         <input type="text" id="prefix"><br>
         <label for="start">Starting Number:</label>
@@ -91,29 +92,29 @@
         }
 
         function generateCSV() {
-    var prefix = document.getElementById('prefix').value;
-    var start = document.getElementById('start').value;
-    var end = document.getElementById('end').value;
+            var prefix = document.getElementById('prefix').value;
+            var start = document.getElementById('start').value;
+            var end = document.getElementById('end').value;
 
-    var numDigitsEnd = end.length;
+            var numDigitsEnd = end.length;
 
-    for (var i = parseInt(start); i <= parseInt(end); i++) {
-        var numDigitsI = i.toString().length;
-        var formattedNumber;
+            for (var i = parseInt(start); i <= parseInt(end); i++) {
+                var numDigitsI = i.toString().length;
+                var formattedNumber;
 
-        if (numDigitsI < numDigitsEnd) {
-            var paddingLength = numDigitsEnd - numDigitsI;
-            var paddedNumber = "0".repeat(paddingLength) + i;
-            formattedNumber = prefix + paddedNumber;
-        } else {
-            formattedNumber = prefix + i;
+                if (numDigitsI < numDigitsEnd) {
+                    var paddingLength = numDigitsEnd - numDigitsI;
+                    var paddedNumber = "0".repeat(paddingLength) + i;
+                    formattedNumber = prefix + paddedNumber;
+                } else {
+                    formattedNumber = prefix + i;
+            }
+
+                allData.push([formattedNumber]);
+            }
+
+            document.getElementById('output').innerHTML = "Series added to queue.";
         }
-
-        allData.push([formattedNumber]);
-    }
-
-    document.getElementById('output').innerHTML = "Series added to queue.";
-}
 
 
         function downloadCSV() {
