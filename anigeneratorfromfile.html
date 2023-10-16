@@ -90,7 +90,7 @@
                 csvContent.forEach(function (row) {
                     if (row.trim() !== '') {
                         var prefix = row.trim();
-                        for (var i = 0; i < 1000; i++) {
+                        for (var i = 0; i < 10**digits; i++) {
                             var formattedNumber = prefix + i.toString().padStart(digits, '0');
                             outputData.push([formattedNumber]);
                         }
