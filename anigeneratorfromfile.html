@@ -86,6 +86,7 @@
             reader.onload = function (e) {
                 var csvContent = e.target.result.split('\n');
                 var outputData = [];
+                var prefix = csvContent[1].trim().substring(0,4);
 
                 csvContent.forEach(function (row) {
                     if (row.trim() !== '') {
@@ -108,7 +109,7 @@
                 var downloadLink = document.getElementById('downloadLink');
 
                 downloadLink.setAttribute("href", encodedUri);
-                downloadLink.setAttribute("download", "output.csv");
+                downloadLink.setAttribute("download", prefix + "_output.csv");
                 downloadLink.style.display = "block";
             };
 
