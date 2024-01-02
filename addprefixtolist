@@ -1,0 +1,91 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Prefix Adder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Prefix Adder</h1>
+    
+    <label for="numbers">Enter numbers (comma-separated):</label>
+    <textarea id="numbers" rows="4" placeholder="e.g., 123, 456, 789"></textarea>
+
+    <label for="prefix">Enter prefix:</label>
+    <input type="text" id="prefix" placeholder="e.g., ABC"><br>
+
+    <button onclick="addPrefix()">Add Prefix</button>
+
+    <a id="downloadLink" style="display: none">Download CSV</a>
+
+    <script>
+        function addPrefix() {
+            var numbersInput = document.getElementById('numbers').value;
+            var prefix = document.getElementById('prefix').value;
+
+            var numbersArray = numbersInput.split(',');
+            var resultArray = numbersArray.map(number => prefix + number.trim());
+
+            var csvContent = resultArray.join('\n');
+            var blob = new Blob([csvContent], { type: 'text/csv' });
+
+            var downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = 'result.csv';
+            downloadLink.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
