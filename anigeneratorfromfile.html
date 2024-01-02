@@ -12,6 +12,7 @@
             margin: 20px;
             background-color: #f0f0f0;
         }
+
         .container {
             max-width: 400px;
             margin: auto;
@@ -20,13 +21,15 @@
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         label {
             font-weight: bold;
             font-size: 1em;
             display: block;
             margin-bottom: 5px;
         }
-        input {
+
+        input, textarea {
             font-size: 1em;
             margin-bottom: 10px;
             padding: 10px;
@@ -35,6 +38,7 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         button {
             font-size: 1em;
             padding: 10px 20px;
@@ -44,9 +48,11 @@
             color: #fff;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         a {
             text-decoration: none;
             color: #007bff;
@@ -56,14 +62,23 @@
 
 <body>
     <div class="container">
-         <a href="index.html">back</a>
+        <a href="index.html">back</a>
         <h1>CSV Generator</h1>
+
+        <label for="inputType">Select Input Type:</label>
+        <select id="inputType">
+            <option value="file">Upload CSV File</option>
+            <option value="textarea">Paste Numbers</option>
+        </select>
 
         <label for="inputFile">Upload CSV File:</label>
         <input type="file" id="inputFile">
 
         <label for="digits">Number of Digits:</label>
         <input type="number" id="digits" min="1" value="2">
+
+        <label for="numbers">Paste Numbers (one per line):</label>
+        <textarea id="numbers" rows="4" placeholder="e.g., 123&#10;456&#10;789"></textarea>
 
         <button onclick="generateCSV()">Generate CSV</button>
         <a id="downloadLink" style="display:none">Download CSV</a>
@@ -73,25 +88,28 @@
 
     <script>
         function generateCSV() {
+            var inputType = document.getElementById('inputType').value;
             var inputFile = document.getElementById('inputFile').files[0];
             var digits = parseInt(document.getElementById('digits').value);
+            var numbersInput = document.getElementById('numbers').value;
+            var numbersArray = numbersInput.split('\n');
 
-            if (!inputFile) {
-                alert("Please upload a CSV file.");
+            if ((inputType === 'file' && !inputFile) || (inputType === 'textarea' && numbersArray.length === 1 && numbersArray[0].trim() === '')) {
+                alert("Please select a valid input type and provide input accordingly.");
                 return;
             }
 
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                var csvContent = e.target.result.split('\n');
+                var csvContent = inputType === 'file' ? e.target.result.split('\n') : numbersArray;
                 var outputData = [];
-                var prefix = csvContent[1].trim().substring(0,4);
+                var prefix = csvContent[1].trim().substring(0, 4);
 
                 csvContent.forEach(function (row) {
                     if (row.trim() !== '') {
                         var prefix = row.trim();
-                        for (var i = 0; i < 10**digits; i++) {
+                        for (var i = 0; i < 10 ** digits; i++) {
                             var formattedNumber = prefix + i.toString().padStart(digits, '0');
                             outputData.push([formattedNumber]);
                         }
@@ -113,7 +131,11 @@
                 downloadLink.style.display = "block";
             };
 
-            reader.readAsText(inputFile);
+            if (inputType === 'file') {
+                reader.readAsText(inputFile);
+            } else {
+                reader.onload();
+            }
         }
     </script>
 </body>
