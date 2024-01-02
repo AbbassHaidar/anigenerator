@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -60,8 +60,8 @@
 <body>
     <h1>Number Prefix Adder</h1>
     
-    <label for="numbers">Enter numbers (comma-separated):</label>
-    <textarea id="numbers" rows="4" placeholder="e.g., 123, 456, 789"></textarea>
+    <label for="numbers">Enter numbers (one per line):</label>
+    <textarea id="numbers" rows="4" placeholder="e.g., 123&#10;456&#10;789"></textarea>
 
     <label for="prefix">Enter prefix:</label>
     <input type="text" id="prefix" placeholder="e.g., ABC"><br>
@@ -75,7 +75,7 @@
             var numbersInput = document.getElementById('numbers').value;
             var prefix = document.getElementById('prefix').value;
 
-            var numbersArray = numbersInput.split(',');
+            var numbersArray = numbersInput.split('\n');
             var resultArray = numbersArray.map(number => prefix + number.trim());
 
             var csvContent = resultArray.join('\n');
