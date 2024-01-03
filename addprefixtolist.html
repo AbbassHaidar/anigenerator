@@ -89,21 +89,20 @@
                 downloadLink.style.display = 'block';
             }
 
-            function getFileName(firstNumber, additionalNumber) {
-    if (firstNumber === undefined || firstNumber === null) {
-        return "result.csv"; // Default name if no numbers are provided
-    }
+           function getFileName(firstNumber) {
+            if (firstNumber === undefined || firstNumber === null) {
+            return "result.csv"; // Default name if no numbers are provided
+                }
 
-    var date = new Date();
-    var formattedDate = date.toISOString().split('T')[0];
+            var date = new Date();
+            var formattedDate = date.toISOString().split('T')[0];
 
-    // Use the additionalNumber if provided, otherwise set it to an empty string
-    var additionalNumberString = additionalNumber !== undefined ? "-" + additionalNumber : "";
+            // Generate a random three-digit number
+            var randomThreeDigitNumber = Math.floor(Math.random() * 900) + 100;
 
-    var fileName = firstNumber.substring(0, 5) + "-result-" + formattedDate + additionalNumberString + ".csv";
-
-    return fileName;
-}
+            var fileName = firstNumber.substring(0, 5) + "-result-" + formattedDate + "-" + randomThreeDigitNumber + ".csv";
+            return fileName;    
+            }
         </script>
     </div>
 </body>
