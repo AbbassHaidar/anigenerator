@@ -72,7 +72,7 @@
 
         <a id="downloadLink" style="display: none">Download CSV</a>
 
-        <script>
+      <script>
     function addPrefix() {
         var numbersInput = document.getElementById('numbers').value;
         var prefix = document.getElementById('prefix').value;
@@ -81,9 +81,9 @@
         var numbersArray = numbersInput.split('\n');
         
         // Filter out lines containing letters or empty spaces
-        var filteredArray = numbersArray.filter(number => !/[a-zA-Z\s]/.test(number.trim()));
+        var filteredArray = numbersArray.filter(number => !/[^0-9\n]/.test(number.trim()));
 
-        // Add prefix to each remaining number
+        // Add prefix to each remaining number and trim them
         var resultArray = filteredArray.map(number => prefix + number.trim());
 
         // Join numbers with line breaks
