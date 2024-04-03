@@ -73,37 +73,43 @@
         <a id="downloadLink" style="display: none">Download CSV</a>
 
         <script>
-            function addPrefix() {
-                var numbersInput = document.getElementById('numbers').value;
-                var prefix = document.getElementById('prefix').value;
+    function addPrefix() {
+        var numbersInput = document.getElementById('numbers').value;
+        var prefix = document.getElementById('prefix').value;
 
-                var numbersArray = numbersInput.split('\n');
-                var resultArray = numbersArray.map(number => prefix + number.trim());
+        // Split input by line breaks
+        var numbersArray = numbersInput.split('\n');
+        
+        // Filter out lines containing letters or empty spaces
+        var filteredArray = numbersArray.filter(number => !/[a-zA-Z\s]/.test(number.trim()));
 
-                var csvContent = resultArray.join('\n');
-                var blob = new Blob([csvContent], { type: 'text/csv' });
+        // Add prefix to each remaining number
+        var resultArray = filteredArray.map(number => prefix + number.trim());
 
-                var downloadLink = document.getElementById('downloadLink');
-                downloadLink.href = URL.createObjectURL(blob);
-                downloadLink.download = getFileName(resultArray[0]);
-                downloadLink.style.display = 'block';
-            }
+        // Join numbers with line breaks
+        var csvContent = resultArray.join('\n');
+        var blob = new Blob([csvContent], { type: 'text/csv' });
 
-           function getFileName(firstNumber) {
-            if (firstNumber === undefined || firstNumber === null) {
-            return "result.csv"; // Default name if no numbers are provided
-                }
+        var downloadLink = document.getElementById('downloadLink');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = getFileName(resultArray[0]);
+        downloadLink.style.display = 'block';
+    }
 
-            var date = new Date();
-            var formattedDate = date.toISOString().split('T')[0];
+    function getFileName(firstNumber) {
+        if (firstNumber === undefined || firstNumber === null) {
+            return "result.csv"; // Default name if no valid numbers are provided
+        }
 
-            // Generate a random three-digit number
-            var randomThreeDigitNumber = Math.floor(Math.random() * 900) + 100;
+        var date = new Date();
+        var formattedDate = date.toISOString().split('T')[0];
 
-            var fileName = firstNumber.substring(0, 5) + "-result-" + formattedDate + "-" + randomThreeDigitNumber + ".csv";
-            return fileName;    
-            }
-        </script>
-    </div>
+        // Generate a random three-digit number
+        var randomThreeDigitNumber = Math.floor(Math.random() * 900) + 100;
+
+        var fileName = firstNumber.substring(0, 5) + "-result-" + formattedDate + "-" + randomThreeDigitNumber + ".csv";
+        return fileName;
+    }
+</script>    </div>
 </body>
 </html>
