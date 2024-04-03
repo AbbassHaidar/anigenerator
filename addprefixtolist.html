@@ -80,8 +80,8 @@
         // Split input by line breaks
         var numbersArray = numbersInput.split('\n');
         
-        // Filter out lines containing letters or empty spaces
-        var filteredArray = numbersArray.filter(number => !/[^0-9\n]/.test(number.trim()));
+        // Filter out lines containing letters, empty spaces, or completely empty lines
+        var filteredArray = numbersArray.filter(number => number.trim() !== '' && !/[^0-9\n]/.test(number.trim()));
 
         // Add prefix to each remaining number and trim them
         var resultArray = filteredArray.map(number => prefix + number.trim());
@@ -110,6 +110,7 @@
         var fileName = firstNumber.substring(0, 5) + "-result-" + formattedDate + "-" + randomThreeDigitNumber + ".csv";
         return fileName;
     }
-</script>    </div>
+</script>
+</div>
 </body>
 </html>
